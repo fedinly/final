@@ -1,2 +1,2 @@
-# -final
+# final
 Diplom work
