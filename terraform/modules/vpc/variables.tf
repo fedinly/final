@@ -35,3 +35,9 @@ variable "external_static_ips" {
 variable "white_ips_for_master" {
   type = list(string)
 }
+variable "bucket" {
+  type = string
+}
+variable "region" {
+  type = string
+  default = "ru-central1"
