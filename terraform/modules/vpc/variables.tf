@@ -1,8 +1,8 @@
 variable "cloud_id" {
-  type    = list(string)
+  type    = string
 }
 variable "folder_id" {
-  type    = list(string)
+  type    = string
 }
 variable "subnet_zones" {
   type    = list(string)
