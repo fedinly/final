@@ -13,8 +13,8 @@ terraform {
     profile                  = "default"
 
     
-    bucket  = ""
-    region  = ""
+    bucket  = var.bucket
+    region  = var.region
     key     = "vpc/terraform.tfstate"
     encrypt = false
     
