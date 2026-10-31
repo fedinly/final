@@ -41,3 +41,4 @@ variable "bucket" {
 variable "region" {
   type = string
   default = "ru-central1"
+}
