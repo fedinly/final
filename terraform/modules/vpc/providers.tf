@@ -41,5 +41,5 @@ provider "yandex" {
   cloud_id                 = var.cloud_id
   folder_id                = var.folder_id
   service_account_key_file = file("~/.authorized_key.json")
-  zone                     = "ru-central1-a" #(Optional) 
+  zone                     = "ru-central1-d" #(Optional) 
 }
