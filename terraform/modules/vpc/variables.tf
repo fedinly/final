@@ -1,9 +1,6 @@
 variable "subnet_zones" {
   type    = list(string)
 }
-variable "db_subnet_zones" {
-  type    = list(string)
-}
 variable "cidr_blocks_priv" {
   type    = list(string)
 }
