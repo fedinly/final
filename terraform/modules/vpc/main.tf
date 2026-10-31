@@ -9,7 +9,7 @@ terraform {
 
   backend "s3" {
     #shared_credentials_files = [ "../bucket/backend.hcl" ]
-    shared_config_files      = [ "~/backend.hcl" ]
+    shared_config_files      = [ "~/tmp/backend.hcl" ]
     profile                  = "default"
 
     
