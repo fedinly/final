@@ -1,12 +1,3 @@
-terraform {
-  required_providers {
-    yandex = {
-      source = "yandex-cloud/yandex"
-    }
-  }
-  required_version = ">=1.8.4"  ### some test 29.10.2025
-}
-
 resource "yandex_vpc_network" "k8s_net" {
   name           = var.vpc_name
 }
