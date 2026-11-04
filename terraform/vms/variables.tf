@@ -1,28 +1,75 @@
-variable "each_vm_master" {
-  type = list(object({  
-    vm_name=string 
-    cpu=number
-    ram=number
-    fraction=number
-    disk_volume=number
-    disk_type=string
-    nat=bool
-  }))
-  default = []
-  description = "VM master parameters"
+variable "vm_count" {
+  type = number
+  default = 1
+  description = "Number of VM's to create"
 }
-variable "each_vm_worker" {
-  type = list(object({  
-    vm_name=string 
-    cpu=number
-    ram=number
-    fraction=number
-    disk_volume=number
-    disk_type=string
-    nat=bool
-  }))
+variable "env_name" {
+  type = string
+  default = ""
+  description = "worker or master"
+  validation {
+    condition = contains(["worker", "master"], var.env_name)
+    error_message = "Invalid env name provided."
+   }
+}
+variable "platform" {
+   type          = string
+   default       = "standard-v3"
+   description   = "VM platform."
+   validation {
+     condition = contains(["standard-v1", "standard-v2", "standard-v3"], var.platform)
+     error_message = "Invalid platform provided."
+   }
+}
+variable "service_account_id" {
+  type = string
+  default = ""
+  description = "Service Account to use in VM"
+}
+variable "description" {
+  type = string
+  description = "Description on VM"
+}
+variable "vm_cores" {
+  type    = number
+  default = 2
+  description ="Number of cores on VM"
+}
+
+variable "vm_memory" {
+  type    = number
+  default = 2
+  description ="Number of memory on VM"
+}
+variable "vm_core_fraction" {
+  type    = number
+  default = 5
+  description ="Number of core fraction on VM"
+}
+variable "boot_disk_type" {
+  type    = string
+  default = "network-hdd"
+  description = "Boot disk type"
+}
+variable "boot_disk_size" {
+  type    = number
+  default = 15
+  description = "Boot disk size"
+}
+variable "nat" {
+  type    = bool
+  default = false
+  description = "Existance of public IP on VM"
+}
+variable "preemptible" {
+  type = bool
+  default = true
+  description = "Preemptible setting on VM"
+}
+variable "security_group_ids" {
+  type = list(string)
   default = []
-  description = "VM worker parameters"
+  description = "Place in some SG"
 }
 variable "network_id" {
   type    = string
