@@ -1,3 +1,11 @@
+variable "cloud_id" {
+  type        = string
+  description = "https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id"
+}
+variable "folder_id" {
+  type        = string
+  description = "https://cloud.yandex.ru/docs/resource-manager/operations/folder/get-id"
+}
 variable "subnet_zones" {
   type        = list(string)
   description = "Avaliable subnet zones to use"
