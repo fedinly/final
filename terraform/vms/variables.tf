@@ -30,6 +30,18 @@ variable "description" {
   type = string
   description = "Description on VM"
 }
+variable "sg_internal" {
+  type = string
+  description = "Security Group Internal ID"
+}
+variable "sg_k8s_worker" {
+  type = string
+  description = "Security Group for Worker ID"
+}
+variable "sg_k8s_master" {
+  type = string
+  description = "Security Group for Master ID"
+}
 variable "vm_cores" {
   type    = number
   default = 2
