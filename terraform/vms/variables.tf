@@ -35,7 +35,11 @@ variable "vm_cores" {
   default = 2
   description ="Number of cores on VM"
 }
-
+variable "subnet_zones" {
+  type        = list(string)
+  default     = []
+  description = "Subnet Zones using in project"
+}
 variable "vm_memory" {
   type    = number
   default = 2
