@@ -3,15 +3,7 @@ variable "temp_count" {
   default = 1
   description = "Number of VM's to create"
 }
-variable "env_name" {
-  type = string
-  default = ""
-  description = "Env for temp vm"
-  validation {
-    condition = contains(["worker", "master"], var.env_name)
-    error_message = "Invalid env name provided."
-   }
-}
+
 variable "platform" {
    type          = string
    default       = "standard-v3"
@@ -57,7 +49,7 @@ variable "boot_disk_size" {
 }
 variable "nat" {
   type    = bool
-  default = false
+  default = true
   description = "Existance of public IP on VM"
 }
 variable "preemptible" {
