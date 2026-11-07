@@ -16,6 +16,8 @@ resource "yandex_compute_instance" "temp-vm" {
   name        = "temp-${count.index}"
   hostname    = "msvc-${count.index}"
   platform_id = var.platform
+  description        = "${var.description}"
+
   provisioner "local-exec" {
     command    = "eval $(ssh-agent) && cat ~/.ssh/id_ed25519 | ssh-add -"
     on_failure = continue #Продолжить выполнение terraform pipeline в случае ошибок
@@ -81,11 +83,7 @@ resource "yandex_compute_instance" "temp-vm" {
 
   network_interface {
     subnet_id = var.subnet_id
-    nat       = length(yandex_compute_instance.bastion) > 0 ? false : true
+    nat       = true
   }
   allow_stopping_for_update = true
-}
-
-output "nat_ip_address" {
-  value = [ yandex_compute_instance.msvc.0.network_interface.0.nat_ip_address ]
 }

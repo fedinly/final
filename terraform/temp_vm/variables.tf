@@ -20,7 +20,7 @@ variable "service_account_id" {
 }
 variable "description" {
   type = string
-  default = "Temp-vm"
+  default = "Temp-VM"
   description = "Description of VM"
 }
 variable "vm_cores" {
