@@ -17,7 +17,8 @@ resource "yandex_compute_instance" "temp-vm" {
   hostname    = "msvc-${count.index}"
   platform_id = var.platform
   description        = "${var.description}"
-
+  service_account_id = var.service_account_id
+  
   provisioner "local-exec" {
     command    = "eval $(ssh-agent) && cat ~/.ssh/id_ed25519 | ssh-add -"
     on_failure = continue #Продолжить выполнение terraform pipeline в случае ошибок
