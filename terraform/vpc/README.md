@@ -38,9 +38,9 @@ No modules.
 | <a name="input_cloud_id"></a> [cloud\_id](#input\_cloud\_id) | https://cloud.yandex.ru/docs/resource-manager/operations/cloud/get-id | `string` | n/a | yes |
 | <a name="input_external_ips"></a> [external\_ips](#input\_external\_ips) | Hosts Static IP's | <pre>map(list(object(<br/>    {<br/>      name = string,<br/>      zone = string<br/>    }))<br/>  )</pre> | n/a | yes |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | https://cloud.yandex.ru/docs/resource-manager/operations/folder/get-id | `string` | n/a | yes |
-| <a name="input_subnet_zones"></a> [subnet\_zones](#input\_subnet\_zones) | Avaliable subnet zones to use | `list(string)` | n/a | yes |
-| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnet parameters for using in k8s | <pre>map(list(object(<br/>    {<br/>      name = string,<br/>      zone = string,<br/>      cidr = list(string)<br/>    }))<br/>  )</pre> | n/a | yes |
-| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | VM network name | `string` | `"diplom_net"` | no |
+| <a name="input_subnet_zones"></a> [subnet\_zones](#input\_subnet\_zones) | Avaliable subnet zones to use in k8s | `list(string)` | n/a | yes |
+| <a name="input_subnets"></a> [subnets](#input\_subnets) | Subnet parameters to use in k8s | <pre>map(list(object(<br/>    {<br/>      name = string,<br/>      zone = string,<br/>      cidr = list(string)<br/>    }))<br/>  )</pre> | n/a | yes |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Project network name | `string` | `"diplom_net"` | no |
 
 ## Outputs
 
