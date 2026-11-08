@@ -11,10 +11,10 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
   service_account_id      = var.service_account_id 
   node_service_account_id = var.service_account_id 
     depends_on = [
-      var.k8s-clusters-agent,
-      var.vpc-public-admin,
-      yandex_resourcemanager_folder_iam_member.images-puller,
-      yandex_resourcemanager_folder_iam_member.encrypterDecrypter
+      var.sa-k8s-clusters-agent,
+      var.sa-vpc-public-admin,
+      var.sa-images-puller,
+      var.sa-encrypterDecrypter
     ]
   network_id             = var.network_id
   master {
