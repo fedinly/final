@@ -87,11 +87,11 @@ variable "master_region" {
 variable "master_version" {
   type = string
 }
-variable "k8s-clusters-agent" {
+variable "sa-k8s-clusters-agent" {
   type = string
   default = ""
 }
-variable "vpc-public-admin" {
+variable "sa-vpc-public-admin" {
   type = string
   default = ""
 }
