@@ -31,7 +31,7 @@ resource "yandex_vpc_security_group" "k8s_master" {
   ingress {
     protocol       = "TCP"
     description    = "access to api k8s"
-    v4_cidr_blocks = var.white_ips_for_master
+    v4_cidr_blocks = var.allowed_ips_for_master
     port           = 443
   }
   ingress {
