@@ -95,3 +95,11 @@ variable "vpc-public-admin" {
   type = string
   default = ""
 }
+variable "sa-images-puller" {
+  type = string
+  default = ""
+}
+variable "sa-encrypterDecrypter' {
+  type = string
+  default = ""
+}
