@@ -34,6 +34,10 @@ variable "subnet_zones" {
 variable "service_account_name" {
   type = string
 }
+variable "service_account_id" {
+  type = string
+  default = ""
+}
 variable "k8s_cls_name" {
   type = string
 }
