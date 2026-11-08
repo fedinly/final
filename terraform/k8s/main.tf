@@ -1,0 +1,58 @@
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">=1.8.4"  ### some test 29.10.2025
+}
+locals {
+  #subnet_id_list = module.db_net.subnet_pub_details
+  user-data = "${file("~/.ssh/id_ed25519.pub")}"
+}
+
+resource "yandex_kubernetes_cluster" "k8s_cluster" {
+  name = var.k8s_cls_name
+  service_account_id      = yandex_iam_service_account.svc-k8s.id
+  node_service_account_id = yandex_iam_service_account.svc-k8s.id
+    depends_on = [
+      yandex_resourcemanager_folder_iam_member.k8s-clusters-agent,
+      yandex_resourcemanager_folder_iam_member.vpc-public-admin,
+      yandex_resourcemanager_folder_iam_member.images-puller,
+      yandex_resourcemanager_folder_iam_member.encrypterDecrypter
+    ]
+  network_id             = var.network_id
+  master {
+    public_ip = var.master_public_ip
+    regional {
+      region = var.master_region
+      dynamic "location" {
+        for_each = var.k8s_masters_subnet_info
+        #local.m_network_output.master_subnet_list
+        content {
+          zone      = location.value["zone"]
+          subnet_id = location.value["subnet_id"]
+        }
+      }
+    }    
+    security_group_ids = [var.sg_k8s_master]
+  }
+  kms_provider {
+      key_id = yandex_kms_symmetric_key.kms-key.id
+    }
+  /*  
+  scale_policy {
+    auto_scale  {
+      min_resource_preset_id = "s2.small"
+    }
+  } 
+  */
+  network_policy_provider = var.np_provider
+}
+
+
+resource "yandex_compute_placement_group" "group1" {
+  name        = var.pl_group_name
+  folder_id   = var.folder_id
+  description = "PG for K8S Cluster"
+}
