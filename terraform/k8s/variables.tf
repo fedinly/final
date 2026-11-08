@@ -99,7 +99,7 @@ variable "sa-images-puller" {
   type = string
   default = ""
 }
-variable "sa-encrypterDecrypter' {
+variable "sa-encrypterDecrypter" {
   type = string
   default = ""
 }
