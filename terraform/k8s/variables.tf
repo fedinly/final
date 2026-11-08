@@ -31,9 +31,6 @@ variable "subnet_zones" {
   type    = list(string)
   default = []
 }
-variable "service_account_name" {
-  type = string
-}
 variable "service_account_id" {
   type = string
   default = ""
