@@ -34,9 +34,6 @@ variable "subnet_zones" {
 variable "service_account_name" {
   type = string
 }
-variable "node_service_account_name" {
-  type = string
-}
 variable "k8s_cls_name" {
   type = string
 }
