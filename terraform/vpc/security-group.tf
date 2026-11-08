@@ -1,7 +1,7 @@
 resource "yandex_vpc_security_group" "internal" {
   name        = "internal"
   description = "Managed by terraform"
-  network_id  = yandex_vpc_network.cls_net.id
+  network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "yc_internal"
   }
@@ -24,7 +24,7 @@ resource "yandex_vpc_security_group" "internal" {
 resource "yandex_vpc_security_group" "k8s_master" {
   name        = "k8s-master"
   description = "Managed by terraform"
-  network_id  = yandex_vpc_network.cls_net.id
+  network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "k8s-master"
   }
@@ -46,7 +46,7 @@ resource "yandex_vpc_security_group" "k8s_master" {
 resource "yandex_vpc_security_group" "k8s_worker" {
   name        = "k8s-worker"
   description = "Managed by terraform"
-  network_id  = yandex_vpc_network.cls_net.id
+  network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "k8s-worker"
   }
