@@ -103,3 +103,7 @@ variable "sa-encrypterDecrypter" {
   type = string
   default = ""
 }
+variable "kms-key-id" {
+  type = string
+  default = ""
+}
