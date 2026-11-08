@@ -33,12 +33,12 @@ output "subnet_pub_details" {
   description = "Subnet parameters"
 }
 output "k8s_masters_subnet_info" {
-  value = [for k, v in var.subnets["k8s_masters"] : zipmap(["subnet_id", "zone"], [yandex_vpc_subnet.k8s_subn[v.name].id, yandex_vpc_subnet.k8s_subn[v.name].zone])]
+  value = [for k, v in var.subnets["k8s_masters"] : zipmap(["subnet_id", "zone"], [yandex_vpc_subnet.diplom_k8s_subnet[v.name].id, yandex_vpc_subnet.diplom_k8s_subnet[v.name].zone])]
   description = "Subnet parameters for masters"
 }
 
 output "k8s_workers_subnet_info" {
-  value = [for k, v in var.subnets["k8s_workers"] : zipmap(["subnet_id", "zone"], [yandex_vpc_subnet.k8s_subn[v.name].id, yandex_vpc_subnet.k8s_subn[v.name].zone])]
+  value = [for k, v in var.subnets["k8s_workers"] : zipmap(["subnet_id", "zone"], [yandex_vpc_subnet.diplom_k8s_subnet[v.name].id, yandex_vpc_subnet.diplom_k8s_subnet[v.name].zone])]
   description = "Subnet parameters for workers"
 }
 output "sg_internal" {
