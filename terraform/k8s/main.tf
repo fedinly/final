@@ -33,7 +33,7 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
     security_group_ids = [var.sg_k8s_master]
   }
   kms_provider {
-      key_id = yandex_kms_symmetric_key.kms-key.id
+      key_id = var.kms-key-id
     }
   /*  
   scale_policy {
