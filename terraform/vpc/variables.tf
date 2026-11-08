@@ -20,7 +20,7 @@ variable "cidr_blocks_pub" {
 }
 variable "vpc_name" {
   type        = string
-  default     = "k8s_net"
+  default     = "diplom_net"
   description = "VM network name"
 }
 variable "subnets" {
@@ -31,11 +31,11 @@ variable "subnets" {
       cidr = list(string)
     }))
   )
-  description = "Subnet parameters for using in VM"
+  description = "Subnet parameters for using in k8ssss"
 }
 #=========== external_ip ==============
-variable "external_static_ips" {
-  description = "VM Static IP's"
+variable "external_ips" {
+  description = "Hosts Static IP's"
 
   type = map(list(object(
     {
@@ -45,16 +45,7 @@ variable "external_static_ips" {
   )
 }
 #=========== security_group ==============
-variable "white_ips_for_master" {
+variable "allowed_ips_for_master" {
   type        = list(string)
-  description = "IP's where allow to connect to VMs"
-}
-variable "bucket" {
-  type        = string
-  description = "bucket info"
-}
-variable "region" {
-  type        = string
-  default     = "ru-central1"
-  description = "Region for bucket"
+  description = "IP's where allow to connect to Hosts"
 }

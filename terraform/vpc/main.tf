@@ -1,5 +1,14 @@
-resource "yandex_vpc_network" "k8s_net" {
-  name = var.vpc_name
+terraform {
+  required_providers {
+    yandex = {
+      source = "yandex-cloud/yandex"
+    }
+  }
+  required_version = ">=1.8.4"  ### some test 29.10.2025
+}
+
+resource "yandex_vpc_network" "diplom_net" {
+  name           = var.vpc_name
 }
 /*
 resource "yandex_vpc_subnet" "db_subn" {
@@ -27,11 +36,11 @@ resource "yandex_vpc_subnet" "k8s_subn" {
 }
 */
 
-resource "yandex_vpc_subnet" "k8s_subn" {
+resource "yandex_vpc_subnet" "diplom_k8s_subnet" {
   for_each = {
     for k, v in local.subnet_array : "${v.name}" => v
   }
-  network_id     = yandex_vpc_network.k8s_net.id
+  network_id = yandex_vpc_network.cls_net.id
   v4_cidr_blocks = each.value.cidr
   zone           = each.value.zone
   name           = each.value.name
