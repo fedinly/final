@@ -8,8 +8,8 @@ terraform {
 }
 resource "yandex_kubernetes_cluster" "k8s_cluster" {
   name = var.k8s_cls_name
-  service_account_id      = yandex_iam_service_account.svc-k8s.id
-  node_service_account_id = yandex_iam_service_account.svc-k8s.id
+  service_account_id      = var.service_account_id 
+  node_service_account_id = var.service_account_id 
     depends_on = [
       yandex_resourcemanager_folder_iam_member.k8s-clusters-agent,
       yandex_resourcemanager_folder_iam_member.vpc-public-admin,
