@@ -6,11 +6,6 @@ terraform {
   }
   required_version = ">=1.8.4"  ### some test 29.10.2025
 }
-locals {
-  #subnet_id_list = module.db_net.subnet_pub_details
-  user-data = "${file("~/.ssh/id_ed25519.pub")}"
-}
-
 resource "yandex_kubernetes_cluster" "k8s_cluster" {
   name = var.k8s_cls_name
   service_account_id      = yandex_iam_service_account.svc-k8s.id
