@@ -89,22 +89,17 @@ variable "master_version" {
   type = string
 }
 variable "sa-k8s-clusters-agent" {
-  type = string
-  default = ""
+  default = {}
 }
 variable "sa-vpc-public-admin" {
-  type = string
-  default = ""
+  default = {}
 }
 variable "sa-images-puller" {
-  type = string
-  default = ""
+  default = {}
 }
 variable "sa-encrypterDecrypter" {
-  type = string
-  default = ""
+  default = {}
 }
 variable "kms-key-id" {
-  type = string
-  default = ""
+  default = {}
 }
