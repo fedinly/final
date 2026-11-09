@@ -20,6 +20,7 @@ resource "yandex_kubernetes_node_group" "k8s_workers" {
     resources {
       memory = lookup(each.value, "memory", 2)
       cores  = lookup(each.value, "cores", 2)
+      core_fraction = lookup(each.value, "core_fraction", 20)
     }
     boot_disk {
       type = lookup(each.value, "boot_disk_type", "network-hdd")
