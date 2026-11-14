@@ -49,3 +49,11 @@ variable "allowed_ips_for_master" {
   type        = list(string)
   description = "IP's where allow to connect to Hosts"
 }
+variable "k8s_pods_ipv4_cidr" {
+  type = string
+  description = "IP for k8s pods addresses"
+}
+variable "k8s_svcs_ipv4_cidr" {
+  type = string
+  description = "IP for k8s service addresses"
+}
