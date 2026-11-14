@@ -1,7 +1,7 @@
-resource "yandex_vpc_security_group" "internal" {
+resource "yandex_vpc_security_group" "sg_internal" {
   name        = "internal"
   description = "Managed by terraform"
-  network_id  = yandex_vpc_network.cls_net.id
+  network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "yc_internal"
   }
