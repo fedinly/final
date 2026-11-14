@@ -42,16 +42,16 @@ output "k8s_workers_subnet_info" {
   description = "Subnet parameters for workers"
 }
 output "sg_internal" {
-  value = yandex_vpc_security_group.internal.id
+  value = yandex_vpc_security_group.sg_internal.id
   description = "Parameters of Security group internal "
 }
 
 output "sg_k8s_master" {
-  value = yandex_vpc_security_group.k8s_master.id
+  value = yandex_vpc_security_group.sg_k8s_master.id
   description = "Parameters of Security group for masters "
 }
 
 output "sg_k8s_worker" {
-  value = yandex_vpc_security_group.k8s_worker.id
+  value = yandex_vpc_security_group.sg_k8s_worker.id
   description = "Parameters of Security grour for workers"
 }
