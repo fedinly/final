@@ -58,7 +58,7 @@ resource "yandex_vpc_security_group" "sg_k8s_master" {
 resource "yandex_vpc_security_group" "sg_k8s_worker" {
   name        = "k8s-worker"
   description = "Managed by terraform"
-  network_id  = yandex_vpc_network.cls_net.id
+  network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "k8s-worker"
   }
