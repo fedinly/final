@@ -30,7 +30,7 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
         }
       }
     }    
-    security_group_ids = [var.sg_k8s_master]
+    security_group_ids = [var.sg_k8s_master, var.sg_k8s_master_each]
   }
   kms_provider {
       key_id = var.kms-key-id
