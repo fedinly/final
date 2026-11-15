@@ -52,7 +52,14 @@ resource "yandex_vpc_security_group" "sg_k8s_master" {
     port           = 4443
     protocol       = "TCP"
     v4_cidr_blocks = [var.k8s_svcs_ipv4_cidr]
-  } 
+  }
+  egress {
+    protocol       = "ANY"
+    description    = "Allow master to connect to external"
+    v4_cidr_blocks = ["0.0.0.0/0"]
+    from_port      = 0
+    to_port        = 65535
+  }
 }
 resource "yandex_vpc_security_group" "sg_k8s_master_each" {
   description = "Allow traffic for the cluster"
