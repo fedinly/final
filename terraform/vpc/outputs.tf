@@ -55,3 +55,7 @@ output "sg_k8s_worker" {
   value = yandex_vpc_security_group.sg_k8s_worker.id
   description = "Parameters of Security grour for workers"
 }
+output "sg_k8s_master_each" {
+  value = yandex_vpc_security_group.sg_k8s_master_each.id
+  description = "Parameters of Security group for masters with dynamic rules"
+}
