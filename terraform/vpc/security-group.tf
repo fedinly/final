@@ -54,6 +54,46 @@ resource "yandex_vpc_security_group" "sg_k8s_master" {
     v4_cidr_blocks = [var.k8s_svcs_ipv4_cidr]
   } 
 }
+resource "yandex_vpc_security_group" "sg_k8s_master_each" {
+  name        = "sg_k8s-master_each"
+  description = "Allow traffic for the cluster"
+  network_id  = yandex_vpc_network.diplom_net.id
+  labels = {
+    firewall = "k8s-master"
+  }
+  for_each = var.masters_ipv4_cidr_blocks
+  egress {
+    protocol       = "TCP"
+    description    = "allow egress https"
+    v4_cidr_blocks = each.key
+    port           = 443
+  }
+  egress {
+    protocol       = "TCP"
+    description    = "allow egress 6443"
+    v4_cidr_blocks = each.key
+    port           = 6443
+  }
+  egress {
+    protocol       = "TCP"
+    description    = "allow egress multiple ports"
+    v4_cidr_blocks = each.key
+    from_port           = 2379
+    to_port = 2380
+  }
+  egress {
+    protocol       = "TCP"
+    description    = "allow egress 4443"
+    v4_cidr_blocks = each.key
+    port           = 4443
+  }
+  egress {
+    protocol       = "TCP"
+    description    = "allow egress 10250"
+    v4_cidr_blocks = each.key
+    port           = 10250
+  }
+}
 
 resource "yandex_vpc_security_group" "sg_k8s_worker" {
   name        = "k8s-worker"
