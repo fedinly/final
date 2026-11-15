@@ -27,6 +27,9 @@ variable "sg_k8s_worker" {
 variable "sg_k8s_master" {
   type = string
 }
+variable "sg_k8s_master_each" {
+  type = string
+}
 variable "subnet_zones" {
   type    = list(string)
   default = []
