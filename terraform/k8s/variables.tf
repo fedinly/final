@@ -53,9 +53,9 @@ variable "np_provider" {
   type = string
   default = "CALICO"
 }
-variable "resource_preset" {
+variable "scale_policy" {
   type = string
-  default = "s-c2-m8"
+  default = "s2-small"
 }
 variable "k8s_scale" {
   description = "Параметры масштабироания node group k8s"
