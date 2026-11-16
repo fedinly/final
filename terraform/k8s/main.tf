@@ -31,15 +31,15 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
       }
     }    
     security_group_ids = [var.sg_k8s_master, var.sg_k8s_master_each, var.sg_internal]
+    scale_policy {
+      fixed_scale {
+        min_resource_preset_id = var.resource_preset
+      }
+    s}
   }
   kms_provider {
       key_id = var.kms-key-id
     }
-  scale_policy {
-    fixed_scale {
-      min_resource_preset_id = var.resource_preset
-    }
-  }
   network_policy_provider = var.np_provider
 }
 
