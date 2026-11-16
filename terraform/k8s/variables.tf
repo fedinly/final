@@ -53,6 +53,9 @@ variable "np_provider" {
   type = string
   default = "CALICO"
 }
+variable "resource_preset"
+  type = string
+  default = "s-c2-m8"
 variable "k8s_scale" {
   description = "Параметры масштабироания node group k8s"
   type = object({
