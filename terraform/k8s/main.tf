@@ -35,13 +35,11 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
   kms_provider {
       key_id = var.kms-key-id
     }
-  /*  
   scale_policy {
-    auto_scale  {
-      min_resource_preset_id = "s2.small"
+    auto_scale {
+      min_resource_preset_id = var.resource_preset
     }
-  } 
-  */
+  }
   network_policy_provider = var.np_provider
 }
 
