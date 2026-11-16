@@ -67,6 +67,52 @@ resource "yandex_vpc_security_group" "sg_k8s_master_each" {
   labels = {
     firewall = "k8s-master"
   }
+  dynamic "ingress" {
+    for_each = var.masters_ipv4_cidr_blocks
+    content {
+      protocol       = "TCP"
+      description    = "allow ingress https"
+      v4_cidr_blocks = [ ingress.value ]
+      port           = 443
+    } 
+  }
+  dynamic "ingress" {
+    for_each = var.masters_ipv4_cidr_blocks
+    content {
+      protocol       = "TCP"
+      description    = "allow ingress 6443"
+      v4_cidr_blocks = [ ingress.value ]
+      port           = 6443
+    }
+  }
+  dynamic "ingress" {
+    for_each = var.masters_ipv4_cidr_blocks
+    content {
+      protocol       = "TCP"
+      description    = "allow ingress multiple ports"
+      v4_cidr_blocks = [ ingress.value ]
+      from_port           = 2379
+      to_port = 2380
+    }
+  }
+  dynamic "ingress" {
+    for_each = var.masters_ipv4_cidr_blocks
+    content {
+      protocol       = "TCP"
+      description    = "allow ingress 4443"
+      v4_cidr_blocks = [ ingress.value ]
+      port           = 4443
+    }
+  }  
+  dynamic "ingress" {
+    for_each = var.masters_ipv4_cidr_blocks
+    content {
+      protocol       = "TCP"
+      description    = "allow ingress 10250"
+      v4_cidr_blocks = [ ingress.value ]
+      port           = 10250
+    }
+  }
   dynamic "egress" {
     for_each = var.masters_ipv4_cidr_blocks
     content {
