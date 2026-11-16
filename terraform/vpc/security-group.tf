@@ -51,7 +51,7 @@ resource "yandex_vpc_security_group" "sg_k8s_master" {
     description    = "For outgoing traffic allows transfer between the master and metric-server pods."
     port           = 4443
     protocol       = "TCP"
-    v4_cidr_blocks = [var.k8s_svcs_ipv4_cidr]
+    v4_cidr_blocks = [var.k8s_pods_ipv4_cidr]
   }
   egress {
     protocol       = "ANY"
