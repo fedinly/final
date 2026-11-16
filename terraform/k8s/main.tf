@@ -35,7 +35,7 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
       fixed_scale {
         min_resource_preset_id = var.resource_preset
       }
-    s}
+    }
   }
   kms_provider {
       key_id = var.kms-key-id
