@@ -55,7 +55,7 @@ variable "np_provider" {
 }
 variable "scale_policy" {
   type = string
-  default = "s2-small"
+  default = "s-c2-m8"
 }
 variable "k8s_scale" {
   description = "Параметры масштабироания node group k8s"
