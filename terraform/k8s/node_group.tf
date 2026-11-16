@@ -37,13 +37,8 @@ resource "yandex_kubernetes_node_group" "k8s_workers" {
     }
   }
   scale_policy {
-    dynamic "auto_scale" {
-      for_each = flatten([lookup(each.value, "auto_scale", [])])
-      content {
-        min     = auto_scale.value.min
-        max     = auto_scale.value.max
-        initial = auto_scale.value.initial
-      }
+    fixed_scale {
+      size = 2
     }
   }
   allocation_policy {
