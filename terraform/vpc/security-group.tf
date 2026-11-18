@@ -1,190 +1,73 @@
-resource "yandex_vpc_security_group" "sg_internal" {
+
+  resource "yandex_vpc_security_group" "internal" {
   name        = "internal"
-  description = "Managed by terraform"
+  description = "Internal cluster traffic"
   network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "yc_internal"
   }
   ingress {
-    description       = "Incoming service traffic between the master and the nodes."
+    protocol          = "ANY"
+    description       = "self"
+    predefined_target = "self_security_group"
     from_port         = 0
     to_port           = 65535
-    protocol          = "ANY"
-    predefined_target = "self_security_group"
   }
+  ingress {
+    protocol       = "ANY"
+    description    = "Allow traffic pod-pod & service-service"
+    v4_cidr_blocks = flatten([for v in concat(var.subnets["k8s_masters"], var.subnets["k8s_workers"]) : v.cidr])
+    from_port      = 0
+    to_port        = 65535
+  }
+
   egress {
-    description       = "Outgoing service traffic between the master and the nodes."
+    protocol          = "ANY"
+    description       = "self"
+    predefined_target = "self_security_group"
     from_port         = 0
     to_port           = 65535
-    protocol          = "ANY"
-    predefined_target = "self_security_group"
   }
 }
-
-resource "yandex_vpc_security_group" "sg_k8s_master" {
-  name        = "sg_k8s-master"
+resource "yandex_vpc_security_group" "k8s_master" {
+  name        = "k8s-master"  
   description = "Allow traffic for the cluster"
   network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "k8s-master"
   }
   ingress {
-    description    = "Allowed access to api k8s (port 443)"
     protocol       = "TCP"
+    description    = "access to api k8s"
     v4_cidr_blocks = var.allowed_ips_for_master
     port           = 443
   }
   ingress {
-    description    = "Allowed access to api k8s (port 6443)"
-    protocol       = "TCP"
-    v4_cidr_blocks = var.allowed_ips_for_master
-    port           = 6443
-  }
-  ingress {
-    description    = "Allows incoming to connect to k8s services"
-    from_port      = 30000
-    to_port        = 32767
-    protocol       = "TCP"
-    v4_cidr_blocks = var.allowed_ips_for_master
-  }
-  egress {
-    description    = "For outgoing traffic allows transfer between the master and metric-server pods."
-    port           = 4443
-    protocol       = "TCP"
-    v4_cidr_blocks = [var.k8s_pods_ipv4_cidr]
-  }
-  egress {
-    protocol       = "ANY"
-    description    = "Allow master to connect to external"
-    v4_cidr_blocks = ["0.0.0.0/0"]
-    from_port      = 0
-    to_port        = 65535
-  }
-}
-resource "yandex_vpc_security_group" "sg_k8s_master_each" {
-  name        = "sg_k8s-master_each"
-  description = "Allow traffic for the cluster"
-  network_id  = yandex_vpc_network.diplom_net.id
-  labels = {
-    firewall = "k8s-master"
-  }
-  dynamic "ingress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow ingress https"
-      v4_cidr_blocks = [ ingress.value ]
-      port           = 443
-    } 
-  }
-  dynamic "ingress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow ingress 6443"
-      v4_cidr_blocks = [ ingress.value ]
-      port           = 6443
-    }
-  }
-  dynamic "ingress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow ingress multiple ports"
-      v4_cidr_blocks = [ ingress.value ]
-      from_port           = 2379
-      to_port = 2380
-    }
-  }
-  dynamic "ingress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow ingress 4443"
-      v4_cidr_blocks = [ ingress.value ]
-      port           = 4443
-    }
-  }  
-  dynamic "ingress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow ingress 10250"
-      v4_cidr_blocks = [ ingress.value ]
-      port           = 10250
-    }
-  }
-  dynamic "egress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow egress https"
-      v4_cidr_blocks = [ egress.value ]
-      port           = 443
-    } 
-  }
-  dynamic "egress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow egress 6443"
-      v4_cidr_blocks = [ egress.value ]
-      port           = 6443
-    }
-  }
-  dynamic "egress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow egress multiple ports"
-      v4_cidr_blocks = [ egress.value ]
-      from_port           = 2379
-      to_port = 2380
-    }
-  }
-  dynamic "egress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow egress 4443"
-      v4_cidr_blocks = [ egress.value ]
-      port           = 4443
-    }
-  }  
-  dynamic "egress" {
-    for_each = var.masters_ipv4_cidr_blocks
-    content {
-      protocol       = "TCP"
-      description    = "allow egress 10250"
-      v4_cidr_blocks = [ egress.value ]
-      port           = 10250
-    }
+    protocol          = "TCP"
+    description       = "access to api k8s from Yandex lb"
+    predefined_target = "loadbalancer_healthchecks"
+    from_port         = 0
+    to_port           = 65535
   }
 }
 
-resource "yandex_vpc_security_group" "sg_k8s_worker" {
+resource "yandex_vpc_security_group" "k8s_worker" {
   name        = "k8s-worker"
-  description = "Managed by terraform"
+  description = "Traffic for workers"
   network_id  = yandex_vpc_network.diplom_net.id
   labels = {
     firewall = "k8s-worker"
   }
   ingress {
     protocol       = "ANY"
-    description    = "Allow any between pods and services"
-    v4_cidr_blocks = [var.k8s_pods_ipv4_cidr, var.k8s_svcs_ipv4_cidr]
+    description    = "any connections"
+    v4_cidr_blocks = ["0.0.0.0/0"]
     from_port      = 0
     to_port        = 65535
   }
-  ingress {
-    description    = "Allow SSH connection to nodes"
-    port           = 22
-    protocol       = "TCP"
-    v4_cidr_blocks = var.allowed_ips_for_master
-  }
   egress {
     protocol       = "ANY"
-    description    = "Allow nodes to connect to external"
+    description    = "any connections"
     v4_cidr_blocks = ["0.0.0.0/0"]
     from_port      = 0
     to_port        = 65535
