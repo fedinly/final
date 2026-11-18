@@ -38,7 +38,7 @@ resource "yandex_kubernetes_node_group" "k8s_workers" {
   }
   scale_policy {
     fixed_scale {
-      size = 2
+      size = lookup(each.value, "scale_size", 1)
     }
   }
   allocation_policy {
