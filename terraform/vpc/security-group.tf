@@ -1,5 +1,5 @@
 
-  resource "yandex_vpc_security_group" "internal" {
+  resource "yandex_vpc_security_group" "sg_internal" {
   name        = "internal"
   description = "Internal cluster traffic"
   network_id  = yandex_vpc_network.diplom_net.id
@@ -29,7 +29,7 @@
     to_port           = 65535
   }
 }
-resource "yandex_vpc_security_group" "k8s_master" {
+resource "yandex_vpc_security_group" "sg_k8s_master" {
   name        = "k8s-master"  
   description = "Allow traffic for the cluster"
   network_id  = yandex_vpc_network.diplom_net.id
@@ -51,7 +51,7 @@ resource "yandex_vpc_security_group" "k8s_master" {
   }
 }
 
-resource "yandex_vpc_security_group" "k8s_worker" {
+resource "yandex_vpc_security_group" "sg_k8s_worker" {
   name        = "k8s-worker"
   description = "Traffic for workers"
   network_id  = yandex_vpc_network.diplom_net.id
