@@ -43,9 +43,14 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
   network_policy_provider = var.np_provider
 }
 
-
 resource "yandex_compute_placement_group" "group1" {
   name        = var.pl_group_name
   folder_id   = var.folder_id
   description = "PG for K8S Cluster"
+}
+
+resource "yandex_kubernetes_cluster_iam_member" "sa-cluster-manager" {
+  cluster_id = yandex_kubernetes_cluster.k8s_cluster.id
+  role = "viewer"
+  member = "serviceAccount:${var.sa-k8s-cluster-api}"
 }
