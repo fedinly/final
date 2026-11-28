@@ -5,7 +5,7 @@ resource "yandex_kubernetes_node_group" "k8s_workers" {
   description = lookup(each.value, "description", null)
   version     = lookup(each.value, "version", var.master_version)
   labels      = lookup(each.value, "labels", null)
-  depends_on = [ yandex_kubernetes_cluster.k8s_cluster ]
+  depends_on  = [yandex_kubernetes_cluster.k8s_cluster]
   instance_template {
     platform_id = lookup(each.value, "platform_id", null)
     name        = lookup(each.value, "name", null)
@@ -18,8 +18,8 @@ resource "yandex_kubernetes_node_group" "k8s_workers" {
       security_group_ids = [var.sg_internal, var.sg_k8s_worker]
     }
     resources {
-      memory = lookup(each.value, "memory", 2)
-      cores  = lookup(each.value, "cores", 2)
+      memory        = lookup(each.value, "memory", 16)
+      cores         = lookup(each.value, "cores", 4)
       core_fraction = lookup(each.value, "core_fraction", 20)
     }
     boot_disk {
