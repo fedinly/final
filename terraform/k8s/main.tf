@@ -4,19 +4,19 @@ terraform {
       source = "yandex-cloud/yandex"
     }
   }
-  required_version = ">=1.8.4"  ### some test 29.10.2025
+  required_version = ">=1.8.4" ### some test 29.10.2025
 }
 resource "yandex_kubernetes_cluster" "k8s_cluster" {
-  name = var.k8s_cls_name
-  service_account_id      = var.service_account_id 
-  node_service_account_id = var.service_account_id 
-    depends_on = [
-      var.sa-k8s-clusters-agent,
-      var.sa-vpc-public-admin,
-      var.sa-images-puller,
-      var.sa-encrypterDecrypter
-    ]
-  network_id             = var.network_id
+  name                    = var.k8s_cls_name
+  service_account_id      = var.service_account_id
+  node_service_account_id = var.service_account_id
+  depends_on = [
+    var.sa-k8s-clusters-agent,
+    var.sa-vpc-public-admin,
+    var.sa-images-puller,
+    var.sa-encrypterDecrypter
+  ]
+  network_id = var.network_id
   master {
     public_ip = var.master_public_ip
     regional {
@@ -29,7 +29,7 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
           subnet_id = location.value["subnet_id"]
         }
       }
-    }    
+    }
     security_group_ids = [var.sg_k8s_master, var.sg_internal]
     scale_policy {
       auto_scale {
@@ -38,19 +38,17 @@ resource "yandex_kubernetes_cluster" "k8s_cluster" {
     }
   }
   kms_provider {
-      key_id = var.kms-key-id
+    key_id = var.kms-key-id
   }
   network_policy_provider = var.np_provider
 }
-
 resource "yandex_compute_placement_group" "group1" {
   name        = var.pl_group_name
   folder_id   = var.folder_id
   description = "PG for K8S Cluster"
 }
-
 resource "yandex_kubernetes_cluster_iam_member" "sa-cluster-manager" {
   cluster_id = yandex_kubernetes_cluster.k8s_cluster.id
-  role = "viewer"
-  member = "serviceAccount:${var.sa-k8s-cluster-api}"
+  role       = "editor"
+  member     = "serviceAccount:${var.sa-k8s-cluster-api}"
 }
