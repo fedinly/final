@@ -55,6 +55,4 @@
 
 | Name | Description |
 | ---- | ----------- |
-| <a name="output_k8s_cluster_id"></a> [k8s\_cluster\_id](#output\_k8s\_cluster\_id) | n/a |
-| <a name="output_k8s_subnet_master"></a> [k8s\_subnet\_master](#output\_k8s\_subnet\_master) | n/a |
-| <a name="output_k8s_subnet_worker"></a> [k8s\_subnet\_worker](#output\_k8s\_subnet\_worker) | n/a |
+| <a name="output_k8s_cluster_id"></a> [k8s\_cluster\_id](#output\_k8s\_cluster\_id) | Cluster id using in HsELM|
