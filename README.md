@@ -55,4 +55,4 @@
 
 | Name | Description |
 | ---- | ----------- |
-| <a name="output_k8s_cluster_id"></a> [k8s\_cluster\_id](#output\_k8s\_cluster\_id) | Cluster ID using in HELM|
+| <a name="output_k8s_cluster_id"></a> [k8s\_cluster\_id](#output\_k8s\_cluster\_id) | Cluster ID using in HELM. yc managed-kubernetes cluster get-credentials --id [k8s\_cluster\_id](#output\_k8s\_cluster\_id) | --external --force|
